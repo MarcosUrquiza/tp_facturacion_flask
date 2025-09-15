@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Reporte por Cliente{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header bg-primary text-white">
+    <h3 class="card-title">Facturas por Cliente</h3>
+  </div>
+  <div class="card-body">
+    <form method="POST" class="form-inline mb-3">
+      <label for="id_cliente" class="mr-2">Cliente:</label>
+      <select name="id_cliente" class="form-control mr-2">
+        {% for c in clientes %}
+        <option value="{{ c.id }}">{{ c.nombre }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-success">Consultar</button>
+    </form>
+
+    {% if facturas %}
+    <table class="table table-bordered">
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Total</th>
+      </tr>
+      {% for f in facturas %}
+      <tr>
+        <td>{{ f.id }}</td>
+        <td>{{ f.fecha }}</td>
+        <td>${{ "%.2f"|format(f.total) }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

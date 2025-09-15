@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Nueva Factura{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header bg-info text-white">
+    <h3 class="card-title">Emitir Nueva Factura</h3>
+  </div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-group">
+        <label>Cliente</label>
+        <select name="id_cliente" class="form-control" required>
+          {% for c in clientes %}
+          <option value="{{ c.id }}">{{ c.nombre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <h5>Productos</h5>
+      <table class="table table-bordered">
+        <tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Cantidad</th></tr>
+        {% for p in productos %}
+        <tr>
+          <td>{{ p.descripcion }}</td>
+          <td>${{ "%.2f"|format(p.precio) }}</td>
+          <td>{{ p.stock }}</td>
+          <td>
+            <input type="number" name="producto_{{ p.id }}" min="0" max="{{ p.stock }}" value="0" class="form-control">
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <button type="submit" class="btn btn-primary">Guardar Factura</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

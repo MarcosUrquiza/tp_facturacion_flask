@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Reporte de Ventas{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header bg-primary text-white">
+    <h3 class="card-title">Ventas por Período</h3>
+  </div>
+  <div class="card-body">
+    <form method="POST" class="form-inline mb-3">
+      <label for="fecha_inicio" class="mr-2">Desde:</label>
+      <input type="date" name="fecha_inicio" class="form-control mr-2" required>
+      <label for="fecha_fin" class="mr-2">Hasta:</label>
+      <input type="date" name="fecha_fin" class="form-control mr-2" required>
+      <button type="submit" class="btn btn-success">Consultar</button>
+    </form>
+
+    {% if facturas %}
+    <table class="table table-bordered">
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Fecha</th>
+        <th>Total</th>
+      </tr>
+      {% for f in facturas %}
+      <tr>
+        <td>{{ f.id }}</td>
+        <td>{{ f.cliente.nombre }}</td>
+        <td>{{ f.fecha }}</td>
+        <td>${{ "%.2f"|format(f.total) }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h4>Total vendido: ${{ "%.2f"|format(total) }}</h4>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
